@@ -1,43 +1,40 @@
 <template>
   <div class="my-app">
     <h1>Witaj w systemie do zapisów na zajęcia</h1>
-    <div v-if="loggedIn">
+    <div v-if="email">
+<!--      <UserPanel @login="(username) => logIn(username)" button-label="Wejdź"></UserPanel>-->
       <h2>Witaj {{ email }}</h2>
-<!--      <button @click="logOut()">Wyloguj</button>-->
       <a @click="logOut()">Wyloguj</a>
     </div>
     <div v-else>
-        <div v-if="!email.includes('@')">W adresie brakuje znaku @ !</div>
-        <div>Zaloguj się e-mailem
-          <input type="email" v-model="email">
-          <button @click="logIn()">Wchodzę</button>
-        </div>
+      <LoginForm @login="(username) => logIn(username)" button-label="Wejdź"></LoginForm>
+      <LoginForm @login="(username) => logIn(username)" button-label="Wleć"></LoginForm>
+      <LoginForm @login="(username) => logIn(username)" :button-label="Math.random() < 0.5 ? 'Etykieta A' : 'Etykieta B'"></LoginForm>
     </div>
-
-<!--    <div v-if="!email.includes('@')">W adresie brakuje znaku @ !</div>-->
-<!--    <div v-else-if="email.length < 10">Ale masz krótki adres! Twój adres ma {{ email.length }} znaki.</div>-->
-<!--    <div v-else-if="email.length < 15">Twój adres e-mail jest w sam raz - ma {{ email.length }} znaki.</div>-->
-<!--    <div v-else>Twój adres e-mail jest stanowczo za długi - ma {{ email.length }} znaki.</div>-->
   </div>
 </template>
 
 <script>
 import "milligram";
+import LoginForm from "./LoginForm";
+//import UserPanel from "./UserPanel";
 
 export default {
+  components: {LoginForm},
   data() {
     return {
-      email: 'dstasik@student.agh.edu.pl',
+      email: '',
       password: '',
       loggedIn: false
     };
   },
   methods: {
-    logIn() {
-      this.loggedIn = true;
+    logIn(username) {
+        //this.loggedIn = true;
+        this.email = username;
     },
     logOut() {
-      this.loggedIn = false;
+      this.email = '';
     },
     alertMyEmail() {
       alert(this.email);
