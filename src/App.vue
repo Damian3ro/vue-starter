@@ -7,6 +7,7 @@
       <a @click="logOut()">Wyloguj</a>
     </div>
     <div v-else>
+        <div v-if="!email.includes('@')">W adresie brakuje znaku @ !</div>
         <div>Zaloguj się e-mailem
           <input type="email" v-model="email">
           <button @click="logIn()">Wchodzę</button>
@@ -21,6 +22,8 @@
 </template>
 
 <script>
+import "milligram";
+
 export default {
   data() {
     return {
